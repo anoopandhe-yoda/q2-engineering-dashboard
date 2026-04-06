@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Q2 Engineering Rocks Dashboard</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a2e; padding: 2rem; }
+  h1 { font-size: 22px; font-weight: 500; margin-bottom: 0.25rem; }
+  .subtitle { font-size: 13px; color: #777; margin-bottom: 1.5rem; }
+
+  .summary-row { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; margin-bottom: 1.5rem; }
+  .stat { background: white; border-radius: 8px; padding: 0.85rem 1rem; border: 0.5px solid #e0e0e0; }
+  .stat-val { font-size: 24px; font-weight: 500; color: #1a1a2e; }
+  .stat-val.green { color: #1D9E75; }
+  .stat-val.red { color: #D4537E; }
+  .stat-lbl { font-size: 11px; color: #888; margin-top: 3px; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.25rem; }
+  .leg-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #666; }
+  .leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  .rock-section { margin-bottom: 1.5rem; }
+  .rock-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding: 10px 14px; border-radius: 8px; }
+  .rock-header.t { background: #1D9E75; }
+  .rock-header.p { background: #D4537E; }
+  .rock-header.c { background: #1a1a2e; }
+  .rock-badge { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: white; flex-shrink: 0; }
+  .rock-name { font-size: 14px; font-weight: 500; color: white; flex: 1; }
+  .rock-annual { font-size: 11px; color: rgba(255,255,255,0.75); }
+
+  .tasks-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
+  .task-row { background: white; border: 0.5px solid #e0e0e0; border-radius: 8px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .task-name { font-size: 12px; color: #1a1a2e; line-height: 1.4; flex: 1; }
+  .status { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 10px; white-space: nowrap; flex-shrink: 0; }
+  .s-dev { background: #E1F5EE; color: #085041; }
+  .s-design { background: #EEEDFE; color: #3C3489; }
+  .s-hold { background: #FAEEDA; color: #633806; }
+  .s-done { background: #EAF3DE; color: #27500A; }
+  .s-test { background: #E6F1FB; color: #0C447C; }
+  .s-scope { background: #FAECE7; color: #712B13; }
+  .s-ns { background: #f5f5f5; color: #888; border: 0.5px solid #ddd; }
+
+  .note-box { background: #fafafa; border-left: 3px solid #D4537E; border-radius: 0 8px 8px 0; padding: 8px 12px; margin-top: 8px; font-size: 12px; color: #666; line-height: 1.5; }
+
+  @media (max-width: 600px) {
+    .tasks-grid { grid-template-columns: 1fr; }
+    .summary-row { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<h1>Q2 Engineering Rocks — Task Dashboard</h1>
+<p class="subtitle">All tasks mapped to Q2 Engineering rocks and 2026 Annual Company rocks</p>
+
+<!-- Summary -->
+<div class="summary-row">
+  <div class="stat"><div class="stat-val">3</div><div class="stat-lbl">Q2 Engineering rocks</div></div>
+  <div class="stat"><div class="stat-val">28</div><div class="stat-lbl">Total tasks mapped</div></div>
+  <div class="stat"><div class="stat-val green">19</div><div class="stat-lbl">In Dev / Testing</div></div>
+  <div class="stat"><div class="stat-val red">5</div><div class="stat-lbl">Blocked / On Hold / Scoping</div></div>
+</div>
+
+<!-- Legend -->
+<div class="legend">
+  <div class="leg-item"><div class="leg-dot" style="background:#1D9E75;"></div> In Dev</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#185FA5;"></div> In Testing</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#534AB7;"></div> In Design</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#3B6D11;"></div> Released</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#BA7517;"></div> On Hold</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#993C1D;"></div> Scoping / Scope Change</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#888;"></div> Not Started</div>
+</div>
+
+<!-- Rock 1 -->
+<div class="rock-section">
+  <div class="rock-header t">
+    <div class="rock-badge">1</div>
+    <div class="rock-name">Platform Modernization: PHP → Java Migration</div>
+    <div class="rock-annual">Annual Rock #4</div>
+  </div>
+  <div class="tasks-grid">
+    <div class="task-row"><span class="task-name">Migrate IAM service APIs</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Create Tenant Service and migrate APIs</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Create CRC Service</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Create Letter Service</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Create Notification Service</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Local setup — standard for all codebases</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Sentry integration across microservices</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Smart Dunning — ML-based retry timing</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Auto Reconciliation — Spreedly webhooks</span><span class="status s-dev">In Dev</span></div>
+  </div>
+</div>
+
+<!-- Rock 2 -->
+<div class="rock-section">
+  <div class="rock-header p">
+    <div class="rock-badge">2</div>
+    <div class="rock-name">CI/CD & DevOps Modernization</div>
+    <div class="rock-annual">Annual Rock #4</div>
+  </div>
+  <div class="tasks-grid">
+    <div class="task-row"><span class="task-name">Jenkins to Bitbucket Pipelines migration</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Microservices dockerization — Cloudmail, AI Letters, CRC Admin</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">UI decoupling: React app to CloudFront + backend API dockerization</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">PHP microservices migration to Java</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">AI integration in DevOps — CI/CD automation and security</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Sentry integration across all CRC applications</span><span class="status s-dev">In Dev</span></div>
+  </div>
+</div>
+
+<!-- Rock 3 -->
+<div class="rock-section">
+  <div class="rock-header c">
+    <div class="rock-badge">3</div>
+    <div class="rock-name">Product Feature Delivery & CHS Growth</div>
+    <div class="rock-annual">Annual Rocks #1 & #3</div>
+  </div>
+  <div class="tasks-grid">
+    <div class="task-row"><span class="task-name">Upgrade CRC API — PHP 8.4 / Laravel 12</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Migrate CloudMail — PHP 8.4 / Laravel 12</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Merge AI Letters into CloudMail</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Migrate CRC Admin to Laravel 12</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Merge & Migrate CHS Dunning into CHS Service</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Fixing errors from Sentry logs, memory leaks and outages</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Signup flow optimization & resolving incomplete signups</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Cloudmail funds flow optimization</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Power of Attorney (POA) MVP</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Joint Applicant Plans</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Re-Adding Full SSN Collection</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Onboarding Redesign</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Side Navigation</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">SSN Verification: Document Upload & Integration</span><span class="status s-design">In Design</span></div>
+    <div class="task-row"><span class="task-name">Automations / Dispute Tab — Trigger GHL Workflows</span><span class="status s-design">In Design</span></div>
+    <div class="task-row"><span class="task-name">SCA Mobile App — Signup flow / CHS</span><span class="status s-design">In Design</span></div>
+    <div class="task-row"><span class="task-name">Integrate Array PiP webhooks with SendGrid</span><span class="status s-test">In Testing</span></div>
+    <div class="task-row"><span class="task-name">Array Identity Protect (IDP) webhooks</span><span class="status s-test">In Testing</span></div>
+    <div class="task-row"><span class="task-name">Build Monthly CHS Engagement & Credit Alert Emails</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Implement CHS Transactional Emails (Array + new template)</span><span class="status s-dev">In Dev</span></div>
+    <div class="task-row"><span class="task-name">Create Internal Archive of Sent SendGrid Emails</span><span class="status s-done">Released</span></div>
+    <div class="task-row"><span class="task-name">CHS to CRC Migration Tool</span><span class="status s-scope">Scoping</span></div>
+    <div class="task-row"><span class="task-name">Auto-Order Free Reports in CRC Import Flow</span><span class="status s-scope">Scope Change</span></div>
+    <div class="task-row"><span class="task-name">Integrate CRC Client Status with Round Selector</span><span class="status s-hold">On Hold</span></div>
+    <div class="task-row"><span class="task-name">Billing Overview + Billing Tab</span><span class="status s-ns">Not Started</span></div>
+    <div class="task-row"><span class="task-name">Review Figma Design for Billing Status Logic</span><span class="status s-ns">Not Started</span></div>
+  </div>
+  <div class="note-box">Marketplace and Marketing Hub: No enhancements planned. Any incoming requests will be evaluated and picked up based on complexity and timing of ticket handover.</div>
+</div>
+
+</body>
+</html>
